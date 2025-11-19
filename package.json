@@ -1,8 +1,9 @@
 {
-  "name": "cnn-workbench",
+  "name": "convolution-visualization-tool",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://simonnchong.github.io/convolution_visualization_tool",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
