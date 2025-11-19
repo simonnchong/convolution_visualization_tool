@@ -19,7 +19,7 @@
 ## 🚀 Live Demo
 
 Try the tool directly in your browser:
-**[https://simonnchong.github.io/convolution\_visualization\_tool/](https://simonnchong.github.io/convolution_visualization_tool/)**
+**[simonnchong.github.io/convolution\_visualization\_tool/](https://simonnchong.github.io/convolution_visualization_tool/)**
 
 ## 🛠️ Tech Stack
 
