@@ -1,9 +1,11 @@
-# DeepLab: CNN Workbench 🧠
+<img width="2524" height="1369" alt="image" src="https://github.com/user-attachments/assets/7172404b-b384-4f7c-8cb0-e334e59583d9" /># DeepLab: CNN Workbench 🧠
 
 [](https://www.google.com/search?q=https://simonnchong.github.io/convolution_visualization_tool/)
 [](https://opensource.org/licenses/MIT)
 
 **DeepLab** is an interactive educational tool designed to demystify the **Convolutional Neural Network (CNN)**. It provides a hands-on environment for students and AI enthusiasts to visualize exactly how mathematical operations transform raw images into abstract **feature maps**.
+
+![example](example.png)
 
 ## 🌟 Key Features
 
