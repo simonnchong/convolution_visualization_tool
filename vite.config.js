@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  // IMPORTANT: This must match your repository name exactly, with slashes
-  base: '/convolution_visualization_tool/', 
+  // This dot-slash tells it to look for files "right here"
+  // It prevents 404 errors caused by wrong repository names
+  base: './', 
 })
