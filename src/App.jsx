@@ -411,7 +411,7 @@ export default function DeepLabCNN() {
           <div className="bg-blue-600 p-1.5 rounded-lg">
             <Microscope className="w-5 h-5 text-white" />
           </div>
-          <h1 className="font-bold text-lg tracking-tight">DeepLab <span className="font-normal text-slate-500">v5.2</span></h1>
+          <h1 className="font-bold text-lg tracking-tight">DeepLab CNN<span className="font-normal text-slate-500">v1.0</span></h1>
         </div>
         
         <div className="flex-1 flex items-center justify-end gap-6 text-sm shrink-0">
