@@ -1,9 +1,9 @@
 import React, { useState, useMemo, useRef, useCallback, useEffect } from 'react';
 import { 
   Play, Pause, Microscope, 
-  ArrowRight, Eraser, ChevronRight, Activity, Grid, MousePointer2,
-  Edit3, Hash, Upload, Image as ImageIcon, Maximize,
-  Calculator, TrendingUp, Type
+  ArrowRight, Eraser, Activity, Grid, MousePointer2,
+  Hash, Upload, Image as ImageIcon, Sun, Moon,
+  Calculator
 } from 'lucide-react';
 
 // --- MATH & LOGIC ENGINE ---
@@ -69,6 +69,9 @@ const ACTIVATIONS = {
 export default function DeepLabCNN() {
   // --- STATE ---
   
+  // Theme State (Default to 'dark')
+  const [theme, setTheme] = useState('dark');
+  
   // Dimensions
   const [gridSize, setGridSize] = useState(14); 
   const [kernelSize, setKernelSize] = useState(3);
@@ -79,7 +82,7 @@ export default function DeepLabCNN() {
   
   // Model Parameters
   const [stride, setStride] = useState(1);
-  const [padding, setPadding] = useState(0);
+  const [padding, setPadding] = useState(0); // Always 0 (Valid)
   const [activation, setActivation] = useState('relu');
   
   // Filter State
@@ -322,16 +325,21 @@ export default function DeepLabCNN() {
     // Adjusted pixel size: 20 for interactive (bigger)
     const pixelSize = isInteractive ? 20 : 22; 
 
+    const lightThemeGridBg = 'bg-slate-200';
+    const darkThemeGridBg = 'bg-black';
+    const gridBg = theme === 'light' ? lightThemeGridBg : darkThemeGridBg;
+    const gridBorder = theme === 'light' ? 'border-slate-400' : 'border-slate-700';
+
     return (
       <div className="flex flex-col items-center gap-2 relative group/grid">
         <div className="relative p-px" style={{ 
             padding: usePadding > 0 ? `${(usePadding/dim)*100}%` : '0', 
-            border: usePadding > 0 ? '1px dashed #475569' : 'none'
+            border: usePadding > 0 ? '1px dashed var(--color-border)' : 'none'
         }}>
             {usePadding > 0 && <div className="absolute -top-4 left-0 text-[8px] text-slate-500">Padding: {usePadding}px</div>}
             
             <div 
-            className="relative bg-black border border-slate-700 shadow-lg select-none overflow-hidden"
+            className={`relative ${gridBg} ${gridBorder} border shadow-lg select-none overflow-hidden`}
             style={{ 
                 width: dim * pixelSize + 'px', 
                 height: dim * pixelSize + 'px',
@@ -401,21 +409,38 @@ export default function DeepLabCNN() {
   };
 
   const mathInfo = getMathDetails();
+  
+  const themeClasses = {
+      dark: 'bg-slate-950 text-slate-200 border-slate-800',
+      light: 'bg-white text-slate-900 border-slate-200',
+  };
+  const cardClasses = theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200';
+  const topBarClasses = theme === 'dark' ? 'bg-slate-900' : 'bg-slate-100';
+
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans selection:bg-blue-500 selection:text-white">
+    <div className={`min-h-screen font-sans selection:bg-blue-500 selection:text-white ${themeClasses[theme]}`}>
       
       {/* Top Bar */}
-      <div className="h-20 border-b border-slate-800 flex items-center px-6 bg-slate-900 sticky top-0 z-20 overflow-x-auto">
+      <div className={`h-20 border-b ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'} flex items-center px-6 ${topBarClasses} sticky top-0 z-20 overflow-x-auto`}>
         <div className="flex items-center gap-3 mr-8 shrink-0">
           <div className="bg-blue-600 p-1.5 rounded-lg">
             <Microscope className="w-5 h-5 text-white" />
           </div>
-          <h1 className="font-bold text-lg tracking-tight">DeepLab CNN<span className="font-normal text-slate-500">v1.0</span></h1>
+          <h1 className="font-bold text-lg tracking-tight">DeepLab <span className="font-normal text-slate-500">v1.0</span></h1>
         </div>
         
         <div className="flex-1 flex items-center justify-end gap-6 text-sm shrink-0">
-             
+            
+             {/* Theme Toggle */}
+             <button
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className={`flex items-center px-3 py-1.5 rounded-full border text-xs transition-all ${theme === 'dark' ? 'bg-slate-800 border-slate-700 text-yellow-400' : 'bg-slate-200 border-slate-300 text-indigo-600'}`}
+                title="Toggle Theme"
+             >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+             </button>
+
              {/* Values Toggle */}
              <button 
                 onClick={() => setShowValues(!showValues)}
@@ -460,13 +485,13 @@ export default function DeepLabCNN() {
              </div>
 
              {/* Activation & Graph */}
-             <div className="flex items-center gap-3 bg-slate-800/50 p-1.5 rounded-lg border border-slate-800">
+             <div className={`flex items-center gap-3 p-1.5 rounded-lg border ${theme === 'dark' ? 'bg-slate-800/50 border-slate-800' : 'bg-slate-200 border-slate-300'}`}>
                  <div className="flex flex-col">
                     <span className="text-[10px] text-slate-500 uppercase font-bold mb-1">Activation</span>
                     <select 
                         value={activation} 
                         onChange={(e) => setActivation(e.target.value)}
-                        className="bg-slate-900 border border-slate-700 text-xs rounded py-1 px-1 outline-none text-slate-300 w-20"
+                        className={`border ${theme === 'dark' ? 'bg-slate-900 border-slate-700 text-slate-300' : 'bg-white border-slate-300 text-slate-800'} text-xs rounded py-1 px-1 outline-none w-20`}
                     >
                         <option value="relu">ReLU</option>
                         <option value="sigmoid">Sigmoid</option>
@@ -483,12 +508,12 @@ export default function DeepLabCNN() {
       <div className="flex flex-col lg:flex-row h-[calc(100vh-80px)]">
         
         {/* LEFT COLUMN: INPUT & MATH */}
-        <div className="w-full lg:w-1/3 border-r border-slate-800 flex flex-col bg-slate-900 overflow-y-auto">
+        <div className={`w-full lg:w-1/3 border-r ${theme === 'dark' ? 'border-slate-800 bg-slate-900' : 'border-slate-300 bg-slate-100'} flex flex-col overflow-y-auto`}>
           
           {/* Drawing Area */}
-          <div className="p-6 border-b border-slate-800">
+          <div className={`p-6 border-b ${theme === 'dark' ? 'border-slate-800' : 'border-slate-300'}`}>
             <div className="flex justify-between items-center mb-4">
-                <h2 className="text-slate-100 font-semibold flex items-center gap-2">
+                <h2 className={`font-semibold flex items-center gap-2 ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}`}>
                     <ImageIcon className="w-4 h-4 text-blue-500" /> Input Layer
                 </h2>
                 <div className="flex gap-2 items-center">
@@ -520,11 +545,11 @@ export default function DeepLabCNN() {
                     highlightRegion={getInputHighlight()} 
                     isInteractive={true}
                     showNums={showValues} 
-                    usePadding={padding === 1 ? Math.floor(kernelSize/2)*20 : 0} // Visual Padding Size
+                    usePadding={0} 
                 />
                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     {!inputGrid.some(x=>x>0) && !isDrawing && (
-                        <div className="flex flex-col items-center text-slate-500 bg-slate-900/90 px-4 py-2 rounded-xl backdrop-blur border border-slate-800">
+                        <div className={`flex flex-col items-center ${theme === 'dark' ? 'text-slate-500 bg-slate-900/90 border-slate-800' : 'text-slate-600 bg-slate-200/90 border-slate-300'} px-4 py-2 rounded-xl backdrop-blur border`}>
                             <MousePointer2 className="w-5 h-5 mb-1" />
                             <span className="font-mono text-xs">Draw Here</span>
                         </div>
@@ -535,14 +560,14 @@ export default function DeepLabCNN() {
           </div>
 
           {/* Math Explainer Panel */}
-          <div className="flex-1 p-6 bg-slate-900/50 overflow-y-auto">
-             <h2 className="text-slate-100 font-semibold flex items-center gap-2 mb-4">
+          <div className={`flex-1 p-6 ${theme === 'dark' ? 'bg-slate-900/50' : 'bg-slate-100/50'} overflow-y-auto`}>
+             <h2 className={`font-semibold flex items-center gap-2 mb-4 ${theme === 'dark' ? 'text-slate-100' : 'text-slate-800'}`}>
                  <Calculator className="w-4 h-4 text-amber-500" /> Convolution Math
              </h2>
              
              {mathInfo ? (
                 <div className="space-y-4 animate-in fade-in duration-300">
-                    <div className="text-xs text-slate-400 bg-slate-800 p-2 rounded border border-slate-700">
+                    <div className={`text-xs p-2 rounded border ${theme === 'dark' ? 'text-slate-400 bg-slate-800 border-slate-700' : 'text-slate-600 bg-slate-200 border-slate-300'}`}>
                         Analyzing: <span className="text-amber-400 font-bold">{mathInfo.filterName}</span> at ({hoveredPixel.x}, {hoveredPixel.y})
                     </div>
                     
@@ -550,22 +575,22 @@ export default function DeepLabCNN() {
                         {mathInfo.calculations.slice(0, 9).map((calc, i) => (
                             <div key={i} className="flex items-center text-xs font-mono">
                                 <span className="text-slate-500 w-4">({i})</span>
-                                <span className={`w-12 text-right ${calc.isPadding ? 'text-slate-600 italic' : 'text-blue-400'}`}>
+                                <span className={`w-12 text-right ${calc.isPadding ? 'text-slate-600 italic' : (theme === 'dark' ? 'text-blue-400' : 'text-blue-700')}`}>
                                     {calc.isPadding ? '0 (pad)' : calc.val.toFixed(2)}
                                 </span>
                                 <span className="px-2 text-slate-600">×</span>
-                                <span className="w-8 text-right text-emerald-400">{calc.weight}</span>
+                                <span className={`w-8 text-right ${theme === 'dark' ? 'text-emerald-400' : 'text-emerald-700'}`}>{calc.weight}</span>
                                 <span className="px-2 text-slate-600">=</span>
-                                <span className="text-white">{calc.product.toFixed(2)}</span>
+                                <span className={`${theme === 'dark' ? 'text-white' : 'text-slate-900'}`}>{calc.product.toFixed(2)}</span>
                             </div>
                         ))}
                         {mathInfo.calculations.length > 9 && <div className="text-xs text-slate-600 pl-4">...and {mathInfo.calculations.length - 9} more</div>}
                     </div>
 
-                    <div className="border-t border-slate-700 pt-2 mt-2">
+                    <div className={`border-t ${theme === 'dark' ? 'border-slate-700' : 'border-slate-300'} pt-2 mt-2`}>
                         <div className="flex justify-between text-sm">
                             <span className="text-slate-400">Sum:</span>
-                            <span className="font-mono text-white">{mathInfo.total.toFixed(2)}</span>
+                            <span className={`font-mono ${theme === 'dark' ? 'text-white' : 'text-slate-800'}`}>{mathInfo.total.toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-sm font-bold text-amber-400 mt-1">
                             <span>{activation.toUpperCase()}(Sum):</span>
@@ -574,7 +599,7 @@ export default function DeepLabCNN() {
                     </div>
                 </div>
              ) : (
-                <div className="flex flex-col items-center justify-center h-32 text-slate-500 text-xs text-center border-2 border-dashed border-slate-800 rounded-xl">
+                <div className={`flex flex-col items-center justify-center h-32 text-xs text-center border-2 border-dashed rounded-xl ${theme === 'dark' ? 'text-slate-500 border-slate-800' : 'text-slate-400 border-slate-400'}`}>
                     <MousePointer2 className="w-6 h-6 mb-2 opacity-20" />
                     Hover over a feature map pixel<br/>to see the math.
                 </div>
@@ -584,7 +609,7 @@ export default function DeepLabCNN() {
         </div>
 
         {/* RIGHT COLUMN: PIPELINE */}
-        <div className="flex-1 overflow-y-auto bg-slate-950 p-6">
+        <div className={`flex-1 overflow-y-auto ${theme === 'dark' ? 'bg-slate-950' : 'bg-slate-200'} p-6`}>
           
           {/* STEP 1: CONVOLUTION */}
           <section className="mb-10">
@@ -593,7 +618,7 @@ export default function DeepLabCNN() {
                 <Activity className="w-5 h-5 text-emerald-500" />
               </div>
               <div>
-                <h2 className="text-lg font-medium text-slate-200">Convolution Layer</h2>
+                <h2 className={`text-lg font-medium ${theme === 'dark' ? 'text-slate-200' : 'text-slate-800'}`}>Convolution Layer</h2>
                 <p className="text-xs text-slate-500 font-mono">
                   Kernel: {kernelSize}x{kernelSize} | Stride: {stride} | Pad: {padding}
                 </p>
@@ -607,15 +632,15 @@ export default function DeepLabCNN() {
                     <div 
                         key={idx} 
                         onMouseEnter={() => setSelectedFilterIdx(idx)}
-                        className={`bg-slate-900 border rounded-xl p-4 flex flex-col items-center transition-colors group cursor-crosshair ${hoveredPixel?.layer === 'conv' && hoveredPixel.filterIndex === idx ? 'border-blue-500 ring-1 ring-blue-500 bg-blue-900/10' : 'border-slate-800 hover:border-slate-600'}`}
+                        className={`border rounded-xl p-4 flex flex-col items-center transition-colors group cursor-crosshair ${theme === 'dark' ? 'bg-slate-900 border-slate-800 hover:border-slate-600' : 'bg-white border-slate-200 hover:border-slate-400'} ${hoveredPixel?.layer === 'conv' && hoveredPixel.filterIndex === idx ? 'border-blue-500 ring-1 ring-blue-500 bg-blue-900/10' : ''}`}
                     >
                         <div className="flex justify-between items-center w-full mb-3">
                              <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400">{filter.name}</h3>
                              {/* Kernel Preview Mini */}
-                             <div className="bg-slate-800 border border-slate-700 p-1 rounded shadow-sm group-hover:border-slate-500 transition-colors" title="Kernel Weights">
-                                  <div className={`grid gap-px bg-slate-600 border border-slate-600`} style={{ gridTemplateColumns: `repeat(${filter.kernel.length}, 1fr)` }}>
+                             <div className={`border p-1 rounded shadow-sm transition-colors ${theme === 'dark' ? 'bg-slate-800 border-slate-700 group-hover:border-slate-500' : 'bg-slate-200 border-slate-300 group-hover:border-slate-500'}`} title="Kernel Weights">
+                                  <div className={`grid gap-px ${theme === 'dark' ? 'bg-slate-600 border-slate-600' : 'bg-slate-400 border-slate-400'}`} style={{ gridTemplateColumns: `repeat(${filter.kernel.length}, 1fr)` }}>
                                       {filter.kernel.flat().map((k, i) => (
-                                          <div key={i} className={`w-2 h-2 ${k > 0 ? 'bg-white' : k < 0 ? 'bg-black' : 'bg-slate-400'}`} />
+                                          <div key={i} className={`w-2 h-2 ${k > 0 ? 'bg-white' : k < 0 ? 'bg-black' : (theme === 'dark' ? 'bg-slate-400' : 'bg-slate-600')}`} />
                                       ))}
                                   </div>
                              </div>
