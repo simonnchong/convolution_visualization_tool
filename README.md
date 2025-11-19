@@ -5,7 +5,7 @@
 
 **DeepLab** is an interactive educational tool designed to demystify the **Convolutional Neural Network (CNN)**. It provides a hands-on environment for students and AI enthusiasts to visualize exactly how mathematical operations transform raw images into abstract **feature maps**.
 
-## Example
+## 😎 Example
 ![example](example.png)
 
 ## 🌟 Key Features
