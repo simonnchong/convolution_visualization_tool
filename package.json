@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://simonnchong.github.io/convolution_visualization_tool",
+  "homepage": ".",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
