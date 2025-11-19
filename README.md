@@ -12,9 +12,9 @@
       * **Kernels:** Experiment with Edge Detection, Sharpen, and Emboss filters.
       * **Activation Functions:** Observe the effects of **ReLU**, Sigmoid, and Tanh activation on feature values.
   * **Mathematical Transparency:**
-      * **Microscope Mode:** Hover over any pixel in the output feature map to reveal the **exact calculation** (`Input × Weight + Bias`) that created that single value.
+      * **Microscope Mode:** Hover over any pixel in the output feature map to reveal the **exact calculation**.
       * **Animation Mode:** Watch the kernel physically slide across the input grid step-by-step to understand the convolution process.
-  * **Dynamic Parameters:** Adjust **Kernel Size** (3x3, 5x5) and **Stride** to see how dimensionality changes instantly.
+  * **Dynamic Parameters:** Adjust **Kernel Size** (3x3, 5x5) to see how dimensionality changes instantly.
 
 ## 🚀 Live Demo
 
