@@ -1,4 +1,55 @@
-DeepLab: CNN Workbench 🧠DeepLab is an interactive educational tool designed to demystify the "black box" of Convolutional Neural Networks (CNNs). It allows students, researchers, and AI enthusiasts to visualize exactly how mathematical operations transform images into feature maps.🌟 Key FeaturesInteractive Input Layer: Draw digits/shapes on a 14x14 grid or upload your own images (automatically resized and grayscaled).Real-Time Convolution: Visualizes the "sliding window" operation with customizable kernels (Edge Detection, Sharpen, Emboss, etc.).Mathematical Transparency: Hover over any pixel in the output to see the exact equation: (Input × Weight) + Bias = Output.Dynamic Parameters: Experiment with Kernel Size (3x3, 5x5), Stride, Padding, and Activation Functions (ReLU, Sigmoid, Tanh).Animation Mode: Watch the scanner move step-by-step to understand the spatial relationship between input and output.🚀 Live DemoTry the tool directly in your browser:https://simonnchong.github.io/convolution_visualization_tool/🛠️ Tech StackFramework: ReactBuild Tool: ViteStyling: Tailwind CSSIcons: Lucide ReactDeployment: GitHub Pages (via GitHub Actions)💻 Running LocallyIf you want to run this on your own machine:Clone the repo:git clone [https://github.com/simonnchong/convolution_visualization_tool.git](https://github.com/simonnchong/convolution_visualization_tool.git)
-Install dependencies:npm install
-Start the server:npm run dev
-📄 LicenseThis project is open source and available under the MIT License.
+# DeepLab: CNN Workbench 🧠
+
+[](https://www.google.com/search?q=https://simonnchong.github.io/convolution_visualization_tool/)
+[](https://opensource.org/licenses/MIT)
+
+**DeepLab** is an interactive educational tool designed to demystify the **Convolutional Neural Network (CNN)**. It provides a hands-on environment for students and AI enthusiasts to visualize exactly how mathematical operations transform raw images into abstract **feature maps**.
+
+## 🌟 Key Features
+
+  * **Interactive Input Layer:** Draw digits or shapes directly on a **14x14 pixel grid** or upload your own image.
+  * **Real-Time Convolution:** Visualizes the entire pipeline with customizable parameters:
+      * **Kernels:** Experiment with Edge Detection, Sharpen, and Emboss filters.
+      * **Activation Functions:** Observe the effects of **ReLU**, Sigmoid, and Tanh activation on feature values.
+  * **Mathematical Transparency:**
+      * **Microscope Mode:** Hover over any pixel in the output feature map to reveal the **exact calculation** (`Input × Weight + Bias`) that created that single value.
+      * **Animation Mode:** Watch the kernel physically slide across the input grid step-by-step to understand the convolution process.
+  * **Dynamic Parameters:** Adjust **Kernel Size** (3x3, 5x5) and **Stride** to see how dimensionality changes instantly.
+
+## 🚀 Live Demo
+
+Try the tool directly in your browser:
+**[https://simonnchong.github.io/convolution\_visualization\_tool/](https://www.google.com/search?q=https://simonnchong.github.io/convolution_visualization_tool/)**
+
+## 🛠️ Tech Stack
+
+  * **Framework:** React (v18)
+  * **Build Tool:** Vite
+  * **Styling:** Tailwind CSS
+  * **Icons:** Lucide React
+  * **Deployment:** GitHub Pages (via GitHub Actions)
+
+## 💻 Running Locally
+
+If you want to run this project on your own machine:
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/simonnchong/convolution_visualization_tool.git
+    ```
+2.  **Navigate to the directory:**
+    ```bash
+    cd convolution_visualization_tool
+    ```
+3.  **Install dependencies (requires Node.js):**
+    ```bash
+    npm install
+    ```
+4.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+
+## 📄 License
+
+This project is open source and available under the [MIT License](https://www.google.com/search?q=LICENSE).
